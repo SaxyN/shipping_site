@@ -1,0 +1,38 @@
+.overview-back {
+    color: black;
+    padding: 25px;
+    border-bottom: solid 1px grey;
+}
+
+.overview-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.overview-stat {
+    border: solid 1px gray;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 15%;
+    box-shadow: 0px 0px 20px 0px gray;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.stat-icon {
+    padding: 5px;
+    box-sizing: border-box;
+    align-items: center;
+}
