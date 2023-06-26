@@ -36,7 +36,7 @@ export default function App() {
                             fontFamily={"Roboto"}
                             fontSize={16}
                         >
-                            {customer.ssn + " " + customer.location}
+                            {/* {customer.ssn + " " + customer.location} */}
                         </Typography>
                     </div>
                 )
