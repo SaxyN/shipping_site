@@ -34,6 +34,7 @@ const app = initializeApp({
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import Settings from './pages/Dashboard/components/Settings/Settings.tsx';
 // console.log(import.meta.env.VITE_FIREBASE_API_KEY);
 // const app = initializeApp({
 //     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -62,6 +63,22 @@ const router = createBrowserRouter([
                 path: "",
                 element: <Overview />,
                 errorElement: <ErrorPage />,
+                loader: async () => {
+                    return Promise.all([
+                        fetch("/api/getActiveCustomers"),
+                        fetch("/api/getActiveOrders"),
+                        fetch("/api/getTotalSales"),
+                    ]).then((responses) => {
+                        return Promise.all(responses.map((res) => {
+                            return res.json();
+                        }));
+                    })
+                    // fetch("/api/getActiveCustomers").then(res => res.json()).then(res => res[0].COUNT).then(res => {
+                    //     fetch("/api/getActiveOrders").then(res => res.json()).then(res => res[0].COUNT)
+                    // })
+                    // const totalSales = fetch("/api/getTotalSales").then(res => res.json());
+                },
+
             },
             {
                 path: "orders",
@@ -91,6 +108,11 @@ const router = createBrowserRouter([
                 element: <Billing />,
                 errorElement: <ErrorPage />,
             },
+            {
+                path: "settings",
+                element: <Settings />,
+                errorElement: <ErrorPage />,
+            }
         ]
     },
     {
