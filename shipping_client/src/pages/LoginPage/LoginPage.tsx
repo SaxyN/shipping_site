@@ -93,7 +93,7 @@ export default function LoginPage() {
                             fontFamily={"Roboto"}
                             fontSize={36}
                         >
-                            Login Portal
+                            Login
                         </Typography>
                         <Typography
                             variant="h3"
