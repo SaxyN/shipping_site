@@ -17,13 +17,14 @@
 
 .dashboard-left {
     /* color: rgba(28, 46, 207, 0.849); */
-    width: 10%;
+    width: 12%;
     border-right: solid 1px rgba(0, 0, 0, 0.3);
     /* padding: 19px; */
     display: flex;
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .dashboard-left-logo {
@@ -54,6 +55,7 @@
     padding: 20px 0px 0px 0px;
     border-top: solid 1px rgba(0, 0, 0, 0.3);
     width: 100%;
+    /* justify-self: flex-end; */
 }
 
 .dashboard-title {

@@ -3,15 +3,32 @@ import "./Overview.css";
 import { IconButton, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 
-import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
+// import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Overview() {
 
-    const data = useLoaderData();
+    const loadData = useLoaderData() as any;
+
+    const [totalSales, setTotalSales] = useState<number>(0);
+    const [activeOrders, setActiveOrders] = useState<number>(0);
+    const [activeUsers, setActiveUsers] = useState<number>(0);
+
+    useEffect(() => {
+        if (loadData[0][0].sum === undefined) {
+            setTotalSales(0)
+        } else {
+            setTotalSales(loadData[0][0].sum)
+        }
+        setActiveOrders(loadData[1][0].count)
+        setActiveUsers(loadData[0][0].count)
+        // setActiveUsers(loadData);
+        // console.log(loadData);
+    }, []);
 
     return (
         <motion.div
@@ -22,7 +39,7 @@ export default function Overview() {
             transition={{ type: "spring" }}
         >
             <div className="overview-stats">
-                <div className="overview-stat">
+                {/* <div className="overview-stat">
                     <div className="stat-info">
                         <Typography
                             variant="body1"
@@ -41,7 +58,7 @@ export default function Overview() {
                             <PaidOutlinedIcon sx={{ color: 'black' }} fontSize={"inherit"} />
                         </IconButton>
                     </div>
-                </div>
+                </div> */}
                 <div className="overview-stat">
                     <div className="stat-info">
                         <Typography
@@ -49,12 +66,12 @@ export default function Overview() {
                             fontFamily={"Roboto"}
                             fontWeight={600}
                             sx={{ color: "rgba(0, 0, 0, 0.5)" }}
-                        >Monthly Sales</Typography>
+                        >Total Sales</Typography>
                         <Typography
                             fontFamily={"Roboto"}
                             fontWeight={600}
                             sx={{ color: "rgba(0, 0, 0, 0.8)" }}
-                        >${"105,000"}</Typography>
+                        >${totalSales}</Typography>
                     </div>
                     <div className="stat-icon">
                         <IconButton disabled>
@@ -74,7 +91,7 @@ export default function Overview() {
                             fontFamily={"Roboto"}
                             fontWeight={600}
                             sx={{ color: "rgba(0, 0, 0, 0.8)" }}
-                        >45</Typography>
+                        >{activeOrders}</Typography>
                     </div>
                     <div className="stat-icon">
                         <IconButton disabled>
@@ -94,7 +111,9 @@ export default function Overview() {
                             fontFamily={"Roboto"}
                             fontWeight={600}
                             sx={{ color: "rgba(0, 0, 0, 0.8)" }}
-                        >160</Typography>
+                        >
+                            {activeUsers}
+                        </Typography>
                     </div>
                     <div className="stat-icon">
                         <IconButton disabled>

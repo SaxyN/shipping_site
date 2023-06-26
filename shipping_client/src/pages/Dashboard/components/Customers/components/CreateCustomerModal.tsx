@@ -1,7 +1,6 @@
 import { Box, Button, Modal, TextField, Typography, styled } from "@mui/material";
 import "./CreateCustomerModal.css";
 import { useState } from "react";
-import { enqueueSnackbar, useSnackbar } from "notistack";
 
 const CssTextField = styled(TextField)({
     margin: '10px 0px 10px 0px',
@@ -31,7 +30,7 @@ const CssButton = styled(Button)({
     '&:hover': {
         backgroundColor: 'gray',
     },
-    borderRadius: '15px',
+    borderRadius: '10px',
     textTransform: 'none',
     // height: '56px',
 })
@@ -39,36 +38,36 @@ const CssButton = styled(Button)({
 interface CustomModalProps {
     openCCreator: boolean,
     setOpenCCreator: (value: boolean) => void,
+    handleCreate: (firstName: string, lastName: string, location: string) => void,
 }
 
-export default function CreateCustomerModal({ openCCreator, setOpenCCreator }: CustomModalProps) {
-    const { enqueueSnackbar } = useSnackbar()
+export default function CreateCustomerModal({ openCCreator, setOpenCCreator, handleCreate }: CustomModalProps) {
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [location, setLocation] = useState<string>("");
 
-    const handleCreate = () => {
-        const fetchCustomers = async () => {
-            fetch("/api/createCustomer", {
-                method: "post",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: firstName + " " + lastName,
-                    location: location,
-                })
-            }).then(res => {
-                if (res.status === 200) {
-                    enqueueSnackbar(firstName + " " + lastName + " was added successfully", { variant: "success" });
-                }
+    // const handleCreate = () => {
+    //     const fetchCustomers = async () => {
+    //         fetch("/api/createCustomer", {
+    //             method: "post",
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //                 name: firstName + " " + lastName,
+    //                 location: location,
+    //             })
+    //         }).then(res => {
+    //             if (res.status === 200) {
+    //                 enqueueSnackbar(firstName + " " + lastName + " was added successfully", { variant: "success" });
+    //             }
 
-            });
-        }
-        fetchCustomers().catch(console.error);
-        handleClose();
-    };
+    //         });
+    //     }
+    //     fetchCustomers().catch(console.error);
+    //     handleClose();
+    // };
 
     const handleClose = () => {
         setOpenCCreator(false);
@@ -77,8 +76,13 @@ export default function CreateCustomerModal({ openCCreator, setOpenCCreator }: C
         setLocation("");
     }
 
+    function checkInputs(): boolean {
+        if (firstName.length > 0 && lastName.length > 0 && location.length > 0) return false;
+        else return true;
+    }
+
     return (
-        <Modal open={openCCreator} onClose={() => handleClose()}>
+        <Modal open={openCCreator}>
             <div className="customer-create-modal">
                 <Typography variant="h6" component="h2" sx={{ marginBottom: "15px" }}>
                     Add a new customer
@@ -104,8 +108,26 @@ export default function CreateCustomerModal({ openCCreator, setOpenCCreator }: C
                         onChange={(e) => setLocation(e.target.value)}
                     />
                 </Box>
-                <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
-                    <CssButton variant="contained" onClick={() => handleCreate()}>CREATE</CssButton>
+                <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+                    <CssButton
+                        variant="contained"
+                        sx={{
+                            backgroundColor: "red",
+                            '&:hover': {
+                                backgroundColor: 'rgb(117,7,7)',
+                            },
+                        }}
+                        onClick={() => handleClose()}
+                    >
+                        Cancel
+                    </CssButton>
+                    <CssButton
+                        variant="contained"
+                        onClick={() => { handleCreate(firstName, lastName, location), handleClose() }}
+                        disabled={checkInputs()}
+                    >
+                        CREATE
+                    </CssButton>
                 </Box>
             </div>
         </Modal>

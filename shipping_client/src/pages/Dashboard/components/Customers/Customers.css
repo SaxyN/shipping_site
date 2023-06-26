@@ -10,14 +10,21 @@
     justify-content: space-between;
 }
 
+
 .customer-grid {
+    padding: 25px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* .customer-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 25px;
     padding: 25px;
     box-sizing: border-box;
     width: 100%;
-}
+} */
 
 .customer-card {
     width: 1fr;

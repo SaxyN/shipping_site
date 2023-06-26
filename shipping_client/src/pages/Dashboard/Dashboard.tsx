@@ -2,7 +2,7 @@ import "./Dashboard.css";
 
 import Typography from '@mui/material/Typography';
 
-import BlackBirdLogo from "../../assets/blackbird.png";
+import BlackBirdLogo from "../../assets/blackbird_logo.png";
 
 //Icons
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../../main';
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
-import DashboardLinks from "./components/DashboardLinks";
+import DashboardLinks from "./components/DashboardLinks/DashboardLinks";
 
 const CssTextField = styled(TextField)({
     margin: '10px 0px 10px 0px',
@@ -44,52 +44,52 @@ const CssTextField = styled(TextField)({
     },
 });
 
-const DashboardTabs = styled(Tabs)({
-    textAlign: "left",
-    width: '100%',
-});
+// const DashboardTabs = styled(Tabs)({
+//     textAlign: "left",
+//     width: '100%',
+// });
 
-const DashboardTab2 = styled(Tab)({
-    textTransform: 'none',
-    minWidth: 0,
-    color: 'gray',
-    fontFamily: "Roboto",
-    borderRadius: "10px",
-    minHeight: '50px',
-    justifyContent: 'flex-start',
-    padding: "0px 15px 0px 15px",
-    margin: "5px 20px 5px 20px",
-    '&.MuiTab-labelIcon': {
-        gap: "10px"
-    },
-    '&:hover': {
-        color: 'black',
-        opacity: 1,
-    },
-    '&.Mui-selected': {
-        '&:hover': {
-            color: 'black',
-            opacity: 1,
-        },
-        color: 'gray',
-        backgroundColor: "transparent",
-        // fontWeight: 500,
-    },
-    '&.Mui-focusVisible': {
-        backgroundColor: '#d1eaff',
-    },
-})
+// const DashboardTab2 = styled(Tab)({
+//     textTransform: 'none',
+//     minWidth: 0,
+//     color: 'gray',
+//     fontFamily: "Roboto",
+//     borderRadius: "10px",
+//     minHeight: '50px',
+//     justifyContent: 'flex-start',
+//     padding: "0px 15px 0px 15px",
+//     margin: "5px 20px 5px 20px",
+//     '&.MuiTab-labelIcon': {
+//         gap: "10px"
+//     },
+//     '&:hover': {
+//         color: 'black',
+//         opacity: 1,
+//     },
+//     '&.Mui-selected': {
+//         '&:hover': {
+//             color: 'black',
+//             opacity: 1,
+//         },
+//         color: 'gray',
+//         backgroundColor: "transparent",
+//         // fontWeight: 500,
+//     },
+//     '&.Mui-focusVisible': {
+//         backgroundColor: '#d1eaff',
+//     },
+// })
 
 export default function Dashboard() {
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if (!user) {
+                navigate("/");
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/firebase.User
             } else {
                 // User is signed out
-                navigate("/");
             }
         });
 
@@ -112,7 +112,7 @@ export default function Dashboard() {
             <div className="dashboard-left">
                 <img src={BlackBirdLogo} alt="" className='dashboard-left-logo' />
                 <DashboardLinks />
-                <div className="dashboard-left-settings">
+                {/* <div className="dashboard-left-settings">
                     <DashboardTabs
                         value={0}
                         orientation="vertical"
@@ -123,7 +123,7 @@ export default function Dashboard() {
                         <DashboardTab2 icon={<SettingsIcon />} iconPosition="start" label="Settings" />
                         <DashboardTab2 onClick={handleLogout} icon={<LogoutIcon />} iconPosition="start" label="Logout" />
                     </DashboardTabs>
-                </div>
+                </div> */}
             </div>
             <div className="dashboard-right">
                 <div className="dashboard-header">
@@ -163,7 +163,9 @@ export default function Dashboard() {
                         <IconButton>
                             <AccountCircleOutlinedIcon />
                         </IconButton>
-
+                        <IconButton onClick={() => handleLogout()}>
+                            <LogoutIcon />
+                        </IconButton>
                     </div>
                 </div>
                 <Outlet />
