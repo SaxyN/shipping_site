@@ -126,7 +126,6 @@ export default function Customers() {
             body: JSON.stringify({
                 name: newRow.name,
                 location: newRow.location,
-                total_orders: newRow.total_orders,
                 id: newRow,
             })
         }).then(res => {
@@ -175,12 +174,12 @@ export default function Customers() {
             width: 180,
             editable: true,
         },
-        {
-            field: 'total_orders',
-            headerName: 'Orders',
-            description: 'Active and/or Completed orders',
-            width: 120,
-        },
+        // {
+        //     field: 'total_orders',
+        //     headerName: 'Orders',
+        //     description: 'Active and/or Completed orders',
+        //     width: 120,
+        // },
         {
             field: 'actions',
             type: 'actions',

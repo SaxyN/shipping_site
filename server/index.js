@@ -63,21 +63,33 @@ app.get("/api/getTotalSales", (req, res) => {
     });
 });
 
+app.get("/api/getOverviewData", (req, res) => {
+    const today = new Date();
+    const time = today.getHours() + ":" + today
+    console.log(time, "/api/getOverviewData");
+    myDb.query('SELECT * FROM overviewData', (err, result) => {
+        if (err) console.log(err);
+        else {
+            console.log(result);
+            res.send(result);
+        }
+    })
+})
+
 app.post("/api/createCustomer", (req, res) => {
     console.log(req.body);
-    myDb.query(`INSERT INTO Customers (name, location, total_orders) VALUES ('${req.body.name}', '${req.body.location}', 0)`, (err, result) => {
+    myDb.query(`INSERT INTO Customers (name, location) VALUES ('${req.body.name}', '${req.body.location}')`, (err, result) => {
         if (err) console.log(err);
         else res.send(result);
     })
 })
 
 app.post("/api/updateCustomer", (req, res) => {
-    myDb.query(`UPDATE Customers SET name = ?, location = ?, total_orders = ? WHERE id = ?`,
+    myDb.query(`UPDATE Customers SET name = ?, location = ? WHERE id = ?`,
         [
 
             req.body.name,
             req.body.location,
-            req.body.total_orders,
             req.body.id.id
 
         ], (err, result) => {
@@ -87,13 +99,22 @@ app.post("/api/updateCustomer", (req, res) => {
             }
             else {
                 res.status(201).send("Success");
-                console.log(result);
             }
         })
 })
 
 app.post("/api/deleteCustomer", (req, res) => {
     myDb.query(`DELETE FROM customers WHERE id = ?`, req.body.id, (err, result) => {
+        if (err) console.log(err);
+        else res.send(result);
+    })
+})
+
+app.get("/api/getProducts", (req, res) => {
+    const today = new Date();
+    const time = today.getHours() + ":" + today
+    console.log(time, "/api/getProducts");
+    myDb.query('SELECT * FROM products', (err, result) => {
         if (err) console.log(err);
         else res.send(result);
     })

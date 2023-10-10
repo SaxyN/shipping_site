@@ -5,6 +5,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack'
 import { AnimatePresence } from "framer-motion";
+import { RecoilRoot } from 'recoil';
 import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
 import Dashboard from './pages/Dashboard/Dashboard.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
@@ -64,19 +65,7 @@ const router = createBrowserRouter([
                 element: <Overview />,
                 errorElement: <ErrorPage />,
                 loader: async () => {
-                    return Promise.all([
-                        fetch("/api/getActiveCustomers"),
-                        fetch("/api/getActiveOrders"),
-                        fetch("/api/getTotalSales"),
-                    ]).then((responses) => {
-                        return Promise.all(responses.map((res) => {
-                            return res.json();
-                        }));
-                    })
-                    // fetch("/api/getActiveCustomers").then(res => res.json()).then(res => res[0].COUNT).then(res => {
-                    //     fetch("/api/getActiveOrders").then(res => res.json()).then(res => res[0].COUNT)
-                    // })
-                    // const totalSales = fetch("/api/getTotalSales").then(res => res.json());
+                    return fetch("/api/getOverviewData").then(res => res.json())
                 },
 
             },
@@ -94,6 +83,9 @@ const router = createBrowserRouter([
                 path: "products",
                 element: <Products />,
                 errorElement: <ErrorPage />,
+                loader: async () => {
+                    return fetch("/api/getProducts").then(res => res.json())
+                }
             },
             {
                 path: "customers",
@@ -132,7 +124,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 }}
                 style={{ fontFamily: "Roboto" }}
             >
-                <RouterProvider router={router} />
+                <RecoilRoot>
+                    <RouterProvider router={router} />
+                </RecoilRoot>
             </SnackbarProvider>
         </AnimatePresence>
     </React.StrictMode>,

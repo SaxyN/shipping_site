@@ -7,11 +7,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import StorefrontIcon from '@mui/icons-material/Storefront';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import GroupsIcon from '@mui/icons-material/Groups';
 
 import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
 
 interface DashboardLinkProps {
     Icon: React.ElementType,
@@ -104,9 +103,9 @@ export default function DashboardLinks() {
                 </Link>
                 <Link to={"/dashboard/products"} className="dashboard-link">
                     {location.pathname === "/dashboard/products" ?
-                        <SelectedButton Icon={StorefrontIcon} name={"Products"} />
+                        <SelectedButton Icon={PointOfSaleIcon} name={"Products"} />
                         :
-                        <UnSelectedButton Icon={StorefrontIcon} name={"Products"} />
+                        <UnSelectedButton Icon={PointOfSaleIcon} name={"Products"} />
                     }
                 </Link>
                 <Link to={"/dashboard/customers"} className="dashboard-link">

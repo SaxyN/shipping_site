@@ -19,15 +19,13 @@ export default function Overview() {
     const [activeUsers, setActiveUsers] = useState<number>(0);
 
     useEffect(() => {
-        if (loadData[0][0].sum === undefined) {
+        if (loadData[0].sum === null) {
             setTotalSales(0)
         } else {
-            setTotalSales(loadData[0][0].sum)
+            setTotalSales(loadData[0].sum)
         }
-        setActiveOrders(loadData[1][0].count)
-        setActiveUsers(loadData[0][0].count)
-        // setActiveUsers(loadData);
-        // console.log(loadData);
+        setActiveOrders(loadData[0].oCount)
+        setActiveUsers(loadData[0].cCount)
     }, []);
 
     return (
